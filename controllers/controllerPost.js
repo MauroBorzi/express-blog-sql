@@ -1,5 +1,5 @@
 // importiamo l'array
-const posts = require(`../data/postsList.js`)
+const posts = require(`../data/db.js`)
 
 // Index
 const index = (req, res) => {
