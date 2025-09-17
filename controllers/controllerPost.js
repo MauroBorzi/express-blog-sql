@@ -21,10 +21,28 @@ const show = (req, res) => {
 
   const sql = 'SELECT * FROM posts WHERE id = ?'
 
+  const tagsSql = `
+  SELECT tags.id, tags.label
+  FROM tags
+  JOIN post_tag ON post_tag.tag_id = tags.id
+  WHERE post_tag.post_id = ?
+  `
+
   connection.query(sql, [id], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Database query failed' })
+    if (err) return res.status(500).json({ error: 'Post query failed' })
     if (results.length === 0) return res.status(404).json({ error: 'Post not found' })
-    res.json(results[0])
+
+    connection.query(tagsSql, [id], (err, tagResults) => {
+      if (err) return res.status(500).json({ error: 'Tag query failed' })
+
+      const postAndTag = {
+        ...results[0],
+        tag: tagResults
+      }
+
+      res.json({ postAndTag })
+    })
+
   })
 
 }
