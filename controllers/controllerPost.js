@@ -16,15 +16,17 @@ const index = (req, res) => {
 
 // Show
 const show = (req, res) => {
-  const id = parseInt(req.params.id);
 
-  const post = posts.find(item => item.id === id)
+  const { id } = req.params
 
-  if (!post) {
-    return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
-  }
+  const sql = 'SELECT * FROM posts WHERE id = ?'
 
-  res.json(post)
+  connection.query(sql, [id], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Database query failed' })
+    if (results.length === 0) return res.status(404).json({ error: 'Post not found' })
+    res.json(results[0])
+  })
+
 }
 
 
@@ -92,12 +94,13 @@ const modify = (req, res) => {
 // Delete
 const destroy = (req, res) => {
 
-  const { id } = req.params;
+  const { id } = req.params
 
   connection.query('DELETE FROM posts WHERE id = ?', [id], (err) => {
-    if (err) return res.status(500).json({ error: 'Failed to delete post' });
+    if (err) return res.status(500).json({ error: 'Failed to delete post' })
     res.sendStatus(204)
-  });
+  })
+
 }
 
 
