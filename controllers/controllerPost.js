@@ -1,20 +1,16 @@
 // importiamo l'array
-const posts = require(`../data/db.js`)
+const connection = require(`../data/db.js`)
 
 // Index
 const index = (req, res) => {
-  //  implementazione di un filtro di ricerca
-  const tags = req.query.tags
 
-  let filteredPost = posts
+  const sql = `SELECT * FROM posts`
 
-  if (tags) {
-    filteredPost = posts.filter(item => {
-      return item.tags.map(tags => tags.toLowerCase()).includes(tags.toLowerCase())
-    })
-  }
+  connection.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ error: 'Database query failed' })
+    res.json(results)
+  })
 
-  res.json(filteredPost)
 }
 
 
