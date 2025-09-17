@@ -1,0 +1,24 @@
+{
+  "name": "express-blog-intro",
+  "version": "1.0.0",
+  "description": "express-blog-intro === ### Esercizio Creiamo il nostro blog personale e giorno dopo giorno lo potremo arricchire con nuove funzionalità sulla base di quello che impareremo.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "watch": "node --watch app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MauroBorzi/express-blog-intro.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MauroBorzi/express-blog-intro/issues"
+  },
+  "homepage": "https://github.com/MauroBorzi/express-blog-intro#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
