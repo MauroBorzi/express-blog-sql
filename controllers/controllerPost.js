@@ -91,17 +91,13 @@ const modify = (req, res) => {
 
 // Delete
 const destroy = (req, res) => {
-  const id = parseInt(req.params.id);
 
-  const post = posts.find(item => item.id === id)
+  const { id } = req.params;
 
-  if (!post) {
-    return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
-  }
-
-  posts.splice(posts.indexOf(post), 1)
-
-  res.sendStatus(204)
+  connection.query('DELETE FROM posts WHERE id = ?', [id], (err) => {
+    if (err) return res.status(500).json({ error: 'Failed to delete post' });
+    res.sendStatus(204)
+  });
 }
 
 
